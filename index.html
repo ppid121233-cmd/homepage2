@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPSE Z1 - 미래를 경험하세요</title>
+    <!-- 프리텐다드 폰트 (전문적이고 깔끔한 느낌) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sec: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --accent: #3b82f6; /* 미래적인 느낌의 블루 */
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 유틸리티 클래스 */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 네비게이션 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: -1px;
+            font-size: 1.5rem;
+        }
+
+        .nav-links a {
+            margin-left: 40px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .buy-btn {
+            background-color: var(--text-primary);
+            color: var(--bg-main);
+            padding: 10px 24px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 60px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 데모용 어두운 테크 이미지 배경 */
+            background: linear-gradient(to bottom, rgba(10,10,10,0.3), var(--bg-main)), 
+                        url('https://images.unsplash.com/photo-1616827774364-0e8c4413b3b9?q=80&w=2940&auto=format&fit=crop') no-repeat center center/cover;
+            z-index: -1;
+            filter: grayscale(100%) brightness(0.6);
+            transform: scale(1.1);
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1.1); }
+            to { transform: scale(1.2); }
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #888888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 제품 특징 섹션 */
+        .features {
+            padding: 150px 0;
+            background-color: var(--bg-main);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 80px;
+            font-weight: 700;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+
+        .feature-item {
+            padding: 40px;
+            background: var(--bg-sec);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+        }
+
+        /* 디자인 쇼케이스 (큰 이미지) */
+        .showcase {
+            height: 80vh;
+            background: url('https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=2864&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            align-items: flex-end;
+            padding: 60px;
+            position: relative;
+        }
+        
+        .showcase::after {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: linear-gradient(to top, var(--bg-main), transparent);
+        }
+
+        .showcase-text {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .showcase-text h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* 신뢰성/보도자료 섹션 */
+        .press {
+            padding: 120px 0;
+            background: var(--bg-sec);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .press-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .press-item {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .press-source {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .press-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+
+        .press-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* CTA 섹션 */
+        .cta-section {
+            padding: 150px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+        }
+
+        /* 푸터 */
+        footer {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-links a {
+            margin-left: 30px;
+        }
+
+        /* 반응형 미디어 쿼리 */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .nav-links { display: none; }
+            .press-grid { grid-template-columns: 1fr; }
+            .showcase { padding: 30px; height: 60vh; }
+            .showcase-text h2 { font-size: 2rem; }
+            .cta-section h2 { font-size: 2.5rem; }
+            .footer-content { flex-direction: column; gap: 20px; }
+            .footer-links a { margin-left: 0; margin-right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 네비게이션 -->
+    <nav>
+        <div class="logo">SYNAPSE</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#design">Design</a>
+            <a href="#press">Press</a>
+            <a href="#specs">Specs</a>
+        </div>
+        <a href="#" class="buy-btn">구매하기</a>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content container">
+            <h1 class="fade-in">미래를 경험하세요.</h1>
+            <p class="fade-in" style="transition-delay: 0.2s;">혁신적인 디자인과 압도적인 성능으로<br>당신의 내일을 여는 노트북, SYNAPSE Z1</p>
+            <div class="fade-in" style="transition-delay: 0.4s;">
+                <a href="#" class="buy-btn" style="padding: 15px 40px; font-size: 1.1rem;">더 알아보기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 특징 섹션 -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title fade-in">압도적인 성능,<br>그 이상의 경험.</h2>
+            <div class="feature-grid">
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">◆</div>
+                    <h3>뉴럴 AI 엔진 탑재</h3>
+                    <p>당신의 작업 패턴을 학습하여 스스로 진화하는 차세대 프로세서가 전에 없던 속도를 선사합니다.</p>
+                </div>
+                <div class="feature-item fade-in" style="transition-delay: 0.2s;">
+                    <div class="feature-icon">●</div>
+                    <h3>초경량 티타늄 바디</h3>
+                    <p>항공우주 등급의 티타늄 소재로 완성된 980g의 무게. 강인하지만 공기처럼 가볍습니다.</p>
+                </div>
+                <div class="feature-item fade-in" style="transition-delay: 0.4s;">
+                    <div class="feature-icon">◈</div>
+                    <h3>인피니트 디스플레이</h3>
+                    <p>베젤을 완전히 없앤 16:10 비율의 4K OLED 화면이 몰입감의 새로운 기준을 제시합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 디자인 쇼케이스 -->
+    <section id="design" class="showcase fade-in">
+        <div class="showcase-text container">
+            <h2>불필요한 모든 것을 덜어낸<br>미니멀리즘의 정점.</h2>
+            <p style="color: var(--text-secondary); font-size: 1.2rem;">SYNAPSE Z1의 디자인 언어는 '침묵'입니다. <br>오직 당신의 크리에이티브만이 빛나도록 설계되었습니다.</p>
+        </div>
+    </section>
+
+    <!-- PRESS 섹션 (신뢰성 강조) -->
+    <section id="press" class="press">
+        <div class="container">
+            <h2 class="section-title fade-in">전문가들의 평가</h2>
+            <div class="press-grid">
+                <div class="press-item fade-in">
+                    <div class="press-source">TECH CRUNCH</div>
+                    <div class="press-title">"올해 우리가 본 가장 충격적인 랩탑. 이것은 단순한 도구가 아니라 미래의 조각이다."</div>
+                    <div class="press-date">2024. 10. 15</div>
+                </div>
+                <div class="press-item fade-in" style="transition-delay: 0.2s;">
+                    <div class="press-source">WIRED KOREA</div>
+                    <div class="press-title">"애플이 긴장해야 할 유일한 경쟁자. 압도적인 퍼포먼스와 완벽한 마감."</div>
+                    <div class="press-date">2024. 09. 28</div>
+                </div>
+                <div class="press-item fade-in">
+                    <div class="press-source">THE VERGE</div>
+                    <div class="press-title">"SYNAPSE Z1은 노트북의 특이점이 왔음을 알린다. 모든 면에서 혁신적이다."</div>
+                    <div class="press-date">2024. 10. 02</div>
+                </div>
+                <div class="press-item fade-in" style="transition-delay: 0.2s;">
+                    <div class="press-source">DESIGN AWARD 2025</div>
+                    <div class="press-title">"기능과 심미성의 완벽한 조화. 올해의 디자인 대상 수상작."</div>
+                    <div class="press-date">2025. 01. 10</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 하단 CTA -->
+    <section class="cta-section">
+        <div class="container fade-in">
+            <h2>내일을 맞이할 준비가<br>되셨습니까?</h2>
+            <a href="#" class="buy-btn" style="padding: 20px 60px; font-size: 1.5rem; border-radius: 50px;">지금 구매하기</a>
+            <p style="margin-top: 30px; color: var(--text-secondary);">30일 무료 체험 | 평생 보증 프로그램 포함</p>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-info">
+                <div class="logo" style="margin-bottom: 20px;">SYNAPSE</div>
+                <p>© 2025 SYNAPSE Corp. All rights reserved.</p>
+                <p>서울특별시 강남구 테헤란로 123, 미래타워 40층</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이용약관</a>
+                <a href="#">고객지원</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 간단한 스크롤 애니메이션 스크립트
+        document.addEventListener("DOMContentLoaded", () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
